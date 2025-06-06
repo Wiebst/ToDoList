@@ -1,1 +1,135 @@
+:root {
+    --background-color: rgb(32, 31, 31);
+    --primary-color: rgb(122, 122, 212);
+    --secondary-color: rgb(94, 94, 134);
+    --text-color: white; 
+    --link-color: rgb(118, 118, 201);
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+hr {
+    width: 100vw;
+    color: var(--secondary-color);
+}
+
+#copyright {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+body {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    font-family: Arial;
+    color: var(--text-color);
+}
+
+header {
+    min-height: 20vh;
+    min-width: 100vw;
+    background-color: var(--primary-color);
+    align-items: start;
+    margin-bottom: 50px;
+}
+
+main {
+    min-height: 60vh;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-left: 80px;
+}
+
+footer {
+    min-height: 10vh;
+    align-content: end;
+}
+
+header * {
+    margin: 100px 0 0 30px;
+    font-size: 3em;
+    font-weight: 800;
+}
+
+.taskContainer {
+    background-color: var(--primary-color);
+    border: 3px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 15px 15px;
+    font-size: large;
+}
+
+#taskInput {
+    box-sizing: border-box;
+    padding: 15px;
+    margin-top: 20px;
+    width: 100%;
+    background: var(--background-color);
+    border: 3px solid var(--secondary-color);
+    border-radius: 10px;
+    font: inherit;
+    color: var(--text-color);
+    caret-color: var(--secondary-color);
+}
+
+#addTaskButton {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    height: 70%;
+    background-color: var(--secondary-color);
+    padding: 0 25px;
+    border: none;
+    border-radius: 10px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--background-color);
+    cursor: pointer;
+}
+
+.task {
+    margin-bottom: 10px;
+    padding: 0 16px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    font-size: medium;
+}
+
+.task .taskContent {
+    padding: 15px;
+    padding-right: 0;
+    flex-grow: 1;
+}
+
+.deleteButton {
+    background-color: var(--secondary-color);
+    border: none;
+    font: inherit;
+    font-weight: 600;
+    color: var(--background-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+}
+
+form {
+    position: relative;
+}
 
