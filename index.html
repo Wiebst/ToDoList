@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>
+        <h1>ToDoList</h1>
+    </header>
 
+    <main>
+        <details class="taskContainer">
+            <summary>Active</summary>
+            <form>
+                <input type="text" autocomplete="off" id="taskInput" placeholder="write description of your task">
+                <button id="addTaskButton">+</button>
+            </form>
+            <ul id="activeTasks">
+
+            </ul>
+        </details>
+
+        <details class="taskContainer">
+            <summary>Completed</summary>
+            <ul id="completedTasks">
+
+            </ul>
+        </details>
+
+        <details class="taskContainer">
+            <summary>All</summary>
+            <ul id="allTasks">
+
+            </ul>
+        </details>
+    </main>
+
+    <footer>
+        <hr>
+        <a id="copyright" href="https://www.youtube.com/watch?v=E4WlUXrJgy4" target="_blank">Copyright</a>
+    </footer>
+    
+    <script src="./scripts.js"></script>
+</body>
+</html>
