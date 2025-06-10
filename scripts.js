@@ -3,15 +3,23 @@ const taskInput = document.getElementById("taskInput")
 const activeTasksList = document.getElementById("activeTasks")
 const completedTasksList = document.getElementById("completedTasks")
 const allTasksList = document.getElementById("allTasks")
+const TASKS_STORAGE_KEY = 'tasks';
 
 let activeTasks = [];
 let completedTasks = [];
 let allTasks = [];
 
+window.addEventListener('load', loadTasks);
+
 taskForm.addEventListener('submit', function(e) {
     e.preventDefault();
     addTask();
 })
+
+activeTasksList.addEventListener('click', deleteTask);
+completedTasksList.addEventListener('click', deleteTask);
+
+activeTasksList.addEventListener('change', markTaskAsCompleted);
 
 function updateTaskList() {
     activeTasksList.innerHTML = "";
@@ -55,9 +63,8 @@ function addTask() {
         updateTaskList();
         taskInput.value = "";
     }
+    saveTasksToStorage()
 }
-
-activeTasksList.addEventListener('change', markTaskAsCompleted);
 
 function markTaskAsCompleted(event) {
     const checkbox = event.target;
@@ -78,10 +85,8 @@ function markTaskAsCompleted(event) {
 
         updateTaskList();
     }
+    saveTasksToStorage()
 }
-
-activeTasksList.addEventListener('click', deleteTask);
-completedTasksList.addEventListener('click', deleteTask);
 
 function deleteTask(event) {
     const target = event.target;
@@ -108,5 +113,69 @@ function deleteTask(event) {
 
         updateTaskList();
     }
+    saveTasksToStorage()
 }
 
+async function fetchTasks() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+
+        if (response.ok == false) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(data));
+        return data;
+    } 
+    catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function renderTasks(tasks) {
+    activeTasks = [];
+    completedTasks = [];
+    allTasks = [];
+
+    tasks.forEach(task => {
+        allTasks.push(task.title);
+        if (task.completed) {
+            completedTasks.push(task.title);
+        } else {
+            activeTasks.push(task.title);
+        }
+    });
+    updateTaskList();
+}
+
+async function loadTasks() {
+    const savedTasks = localStorage.getItem(TASKS_STORAGE_KEY);
+    if (savedTasks) {
+        const tasks = JSON.parse(savedTasks);
+        renderTasks(tasks);
+        } 
+        else {
+            const tasks = await fetchTasks();
+        if (tasks) {
+            renderTasks(tasks);
+        } 
+        else {
+            document.getElementById('tasks').innerText = 'Error';
+        }
+    }
+}
+
+function saveTasksToStorage() {
+    const tasksToSave = [];
+
+    activeTasks.forEach(title => {
+        tasksToSave.push({ title, completed: false });
+    });
+
+    completedTasks.forEach(title => {
+        tasksToSave.push({ title, completed: true });
+    });
+
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(tasksToSave));
+}
