@@ -1,13 +1,13 @@
-const taskForm = document.querySelector("form")
+// const taskForm = document.querySelector("form")
 const taskInput = document.getElementById("taskInput")
 const activeTasksList = document.getElementById("activeTasks")
 const completedTasksList = document.getElementById("completedTasks")
 const allTasksList = document.getElementById("allTasks")
 const TASKS_STORAGE_KEY = 'tasks';
 
-let activeTasks = [];
-let completedTasks = [];
-let allTasks = [];
+const activeTasks = [];
+const completedTasks = [];
+const allTasks = [];
 
 window.addEventListener('load', loadTasks);
 
@@ -21,24 +21,18 @@ completedTasksList.addEventListener('click', deleteTask);
 
 activeTasksList.addEventListener('change', markTaskAsCompleted);
 
+function updateTaskListFor(listElement, tasks) {
+    listElement.innerHTML = "";
+    tasks.forEach((task, taskIndex) => {
+        const taskElement = createTaskItem(task, taskIndex);
+        listElement.append(taskElement);
+    });
+}
+
 function updateTaskList() {
-    activeTasksList.innerHTML = "";
-    activeTasks.forEach((task, taskIndex)=>{
-        activeTask = createTaskItem(task, taskIndex);
-        activeTasksList.append(activeTask);
-    })
-
-    completedTasksList.innerHTML = "";
-    completedTasks.forEach((task, taskIndex)=>{
-        completedlTask = createTaskItem(task, taskIndex);
-        completedTasksList.append(completedlTask);
-    })
-
-    allTasksList.innerHTML = "";
-    allTasks.forEach((task, taskIndex)=>{
-        generalTask = createTaskItem(task, taskIndex);
-        allTasksList.append(generalTask);
-    })
+    updateTaskListFor(activeTasksList, activeTasks);
+    updateTaskListFor(completedTasksList, completedTasks);
+    updateTaskListFor(allTasksList, allTasks);
 }
 
 function createTaskItem(task, taskIndex) {
@@ -150,19 +144,24 @@ function renderTasks(tasks) {
 }
 
 async function loadTasks() {
-    const savedTasks = localStorage.getItem(TASKS_STORAGE_KEY);
-    if (savedTasks) {
-        const tasks = JSON.parse(savedTasks);
-        renderTasks(tasks);
-        } 
-        else {
-            const tasks = await fetchTasks();
+    try {
+        const savedTasks = localStorage.getItem(TASKS_STORAGE_KEY);
+        if (savedTasks) {
+            const tasks = JSON.parse(savedTasks);
+            if (tasks) {
+                renderTasks(tasks);
+                return;
+            }
+        }
+        const tasks = await fetchTasks();
         if (tasks) {
             renderTasks(tasks);
-        } 
-        else {
-            document.getElementById('tasks').innerText = 'Error';
+        } else {
+            showErrorMessage();
         }
+    } catch (error) {
+        console.error('Tasks load error:', error);
+        showErrorMessage();
     }
 }
 
