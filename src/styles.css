@@ -37,10 +37,12 @@ body {
 }
 
 header {
-    min-height: 20vh;
-    min-width: 100vw;
+    height: 20vh;
+    width: 100vw;
     background-color: var(--primary-color);
-    align-items: start;
+    display: flex;
+    align-items: center;
+    justify-content: start;
     margin-bottom: 50px;
 }
 
@@ -59,12 +61,12 @@ footer {
 }
 
 header * {
-    margin: 100px 0 0 30px;
+    text-align: center;margin-left: 50px;
     font-size: 3em;
     font-weight: 800;
 }
 
-.taskContainer {
+.task-container {
     background-color: var(--primary-color);
     border: 3px solid var(--primary-color);
     border-radius: 10px;
@@ -72,7 +74,7 @@ header * {
     font-size: large;
 }
 
-#taskInput {
+.task-input {
     box-sizing: border-box;
     padding: 15px;
     margin-top: 20px;
@@ -85,7 +87,7 @@ header * {
     caret-color: var(--secondary-color);
 }
 
-#addTaskButton {
+.add-task-button {
     position: absolute;
     top: 20px;
     right: 0;
@@ -110,13 +112,13 @@ header * {
     font-size: medium;
 }
 
-.task .taskContent {
+.task .task-content {
     padding: 15px;
     padding-right: 0;
     flex-grow: 1;
 }
 
-.deleteButton {
+.delete-button {
     background-color: var(--secondary-color);
     border: none;
     font: inherit;
